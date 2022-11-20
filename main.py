@@ -23,7 +23,7 @@ def get_cities():
         strs = f"https://worldtimeapi.org/api/timezone/{city['timezone']}"
         
         r = requests.get(strs)
-        print("@@@@",r.json())
+
         cur_time = r.json()["datetime"]
         results.append(
             {
