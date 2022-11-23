@@ -55,7 +55,7 @@
             };
             xhr.open("POST", "/cities");
             
-            // xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
             xhr.setRequestHeader("Content-Type","application/json");
             xhr.send(datastr);
         }
@@ -70,7 +70,7 @@
             var data = { id: cityid, name: cname, timezone: ctimezone }
             var datastr = JSON.stringify(data);
 
-            //alert(datastr);
+            // alert(datastr);
             //return false;
 
             xhr = new XMLHttpRequest();
@@ -78,13 +78,14 @@
                 if (xhr.readyState == 4) {
                     var data = xhr.responseText;
                     var obj = JSON.parse(data);
-                    alert(obj.name + " modified...");
+                    alert(obj.name + " modified");
                     document.getElementById('name_'+cityid).style.color = "#FF6600";
                     document.getElementById('timezone_'+cityid).style.color = "#FF6600";
                 }
             };
             xhr.open("PUT", "/cities");
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            xhr.setRequestHeader("Content-Type","application/json");
             xhr.send(datastr);
         }
 
@@ -141,7 +142,7 @@
             <td align="center">{{city.current_time}}</td>
             <td align="center"><a href="/cities/{{city.id}}"><button>VIEW</button></a></td>
             <td align="center"><button cityid="{{city.id}}" onclick="putCity(this)">수정</button></td>
-            <td align="center"><button onclick="deleteCity({{city.id}})">삭제</button></td>
+            <td align="center"><button onclick=deleteCity({{city.id}})>삭제</button></td>
         </tr>
         {% endfor %}
     {% else %}

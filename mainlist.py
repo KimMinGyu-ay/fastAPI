@@ -15,6 +15,11 @@ class City(BaseModel):
     name: str
     timezone: str
 
+class CityModify(BaseModel):
+    id : int
+    name: str
+    timezone: str
+
 
 templates = Jinja2Templates(directory="templates")
 
@@ -48,15 +53,16 @@ def get_cities(request: Request):
 
 
 @app.get("/cities/{city_id}")
-def det_city(city_id:int):
+def det_city(request:Request, city_id:int):
     city = db[city_id-1]
     strs = f"https://worldtimeapi.org/api/timezone/{city['timezone']}"
  
     r = requests.get(strs)
     cur_time = r.json()["datetime"]
-    return {
+    context =  { "request": request,
         "name":city["name"],"timezone":city["timezone"],"current_time":cur_time}
-        
+    
+    return templates.TemplateResponse("city_detail.html", context)
 
 @app.post("/cities")
 def create_city(city:City):
@@ -64,11 +70,19 @@ def create_city(city:City):
     print(db)
     return db[-1]
 
+@app.put("/cities")
+def modify_city(city:CityModify):
+    db[city.id -1] = {"name":city.name, "timezone":city.timezone}
+    print(db[city.id - 1])
+    return db[(city.id) -1]
+
 @app.delete("/cities/{city_id}")
 def delet_city(city_id:int):
     db.pop(city_id-1)
 
     return {}
+
+
 # Restfull을 FastAPI로 구현
 # locall / url / docs (Swagger) --> RestAPI를 Json으로 표현하는 방식
 # locall / url / redoc
