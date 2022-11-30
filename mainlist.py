@@ -24,7 +24,6 @@ class CityModify(BaseModel):
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/") # url 만들기
-
 def root():
     return {"Hello":"World"}
 
