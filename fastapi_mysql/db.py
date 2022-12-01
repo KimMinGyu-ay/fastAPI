@@ -2,12 +2,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-user_name = "user"
-user_pwd = "1234"
+user_name = "root"
+user_pwd = "rla!57752300"
 db_host = "127.0.0.1"
-db_name = "userdb"
+db_name = "user"
 
-DATABASE = "mysql://%s:%s@%s/%s?charset=utf8//" % (
+DATABASE = "mysql://%s:%s@%s/%s?charset=utf8" % (
     user_name,
     user_pwd,
     db_host,
